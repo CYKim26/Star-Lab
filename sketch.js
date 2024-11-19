@@ -21,11 +21,8 @@ function draw() {
 }
 
 // Task 1: parameterize this function for inner and outer radii and number of sides
-function drawStar( mx = width/2, my = height/2 ) {
-  let numberOfSides = 7
+function drawStar( mx = width/2, my = height/2, ir = 50, or = 100, numberOfSides = 7) {
   let numberOfPoints = numberOfSides * 2
-  let ir = 50
-  let or = 100
   let theta = 0
   let dt = TWO_PI/numberOfPoints
 
