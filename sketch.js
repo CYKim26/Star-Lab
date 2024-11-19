@@ -7,6 +7,7 @@ function setup() {
   starFill = randomColor() 
   fill(starFill)
   noStroke() 
+  star = createStar()
 }
 
 function draw() {
@@ -17,21 +18,40 @@ function draw() {
   // Alternate Task 2: implement breathing of the inner and outer radii
   //   through the use of trigonometric functions (like sin or cos). Remember 
   //   that these functions, by default, are in radians [0,TWO_PI]
-  drawStar()
+  drawStar(star)
+  breathe(star, 1)
 }
 
 // Task 1: parameterize this function for inner and outer radii and number of sides
-function drawStar( mx = width/2, my = height/2, ir = 50, or = 100, numberOfSides = 7) {
-  let numberOfPoints = numberOfSides * 2
-  let theta = 0
-  let dt = TWO_PI/numberOfPoints
+function createStar( mx = width/2, my = height/2, ir = 50, or = 100, numberOfSides = 7) {
+  let star = {}
+  star.np = numberOfSides * 2
+  star.the = 0
+  star.dt = TWO_PI/star.np
+  star.ir = ir
+  star.or = or
+  star.mx = mx
+  star.my = my
+  star.breathStep = 1
+  return star
+}
 
+function breathe(star) {
+
+  star.or += star.breathStep
+  if (star.or >= 125 || star.or <=75) {
+    star.breathStep*=-1
+  }
+  
+}
+function drawStar(star) {
+  
   beginShape()
-  for( let i = 0; i < numberOfPoints; i++ ) {
+  for( let i = 0; i < star.np; i++ ) {
     if( i % 2 === 0 ) {
-      vertex( mx + ir*cos(theta + dt * i), my + ir*sin(theta + dt * i ) )
+      vertex( star.mx + star.ir*cos(star.the + star.dt * i), star.my + star.ir*sin(star.the + star.dt * i ) )
     } else {
-      vertex( mx + or*cos(theta + dt * i), my + or*sin(theta + dt * i ) )
+      vertex( star.mx + star.or*cos(star.the + star.dt * i), star.my + star.or*sin(star.the + star.dt * i ) )
     }
   } 
   endShape()
